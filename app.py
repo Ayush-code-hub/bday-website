@@ -27,7 +27,11 @@ st.markdown(
 )
 
 html = (HERE / "index.html").read_text(encoding="utf-8")
-photo = base64.b64encode((HERE / "photo.jpg").read_bytes()).decode()
+try:
+    photo = base64.b64encode((HERE / "photo.jpg").read_bytes()).decode()
+    # (Put your code that displays the photo here)
+except FileNotFoundError:
+    pass # Skips loading the photo if it doesn't exist
 html = html.replace('src="photo.jpg"', f'src="data:image/jpeg;base64,{photo}"')
 
 components.html(html, height=900, scrolling=True)
